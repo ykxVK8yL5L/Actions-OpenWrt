@@ -121,6 +121,7 @@ cp -rf kenzok8-packages/smartdns package/smartdns
 cp -rf kenzok8-packages/luci-app-passwall package/luci-app-passwall
 cp -rf kenzok8-packages/luci-app-eqos package/luci-app-eqos
 cp -rf kenzok8-packages/mosdns package/mosdns
+cp -rf kenzok8-packages/v2dat packagev2dat
 cp -rf kenzok8-packages/luci-app-mosdns package/luci-app-mosdns
 cp -rf kenzok8-packages/luci-theme-edge package/luci-theme-edge
 cp -rf kenzok8-packages/luci-lib-taskd package/luci-lib-taskd
