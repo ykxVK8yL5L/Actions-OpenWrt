@@ -71,6 +71,7 @@ jobs:
         sudo -E apt -y purge azure-cli* docker* ghc* zulu* llvm* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* dotnet* snap* aspnetcore*
         [ -n "$AGENT_TOOLSDIRECTORY" ] && sudo rm -rf "$AGENT_TOOLSDIRECTORY"
         sudo -E apt update
+        sudo apt-get install clang
         sudo -E apt -y install $(curl -fsSL https://is.gd/depends_ubuntu_2204)
         sudo -E apt -y autoremove --purge
         sudo -E systemctl daemon-reload
@@ -80,20 +81,7 @@ jobs:
         sudo chown $USER:$GROUPS /workdir
         echo "status=success" >> ${GITHUB_OUTPUT}
         df -Th
-        # 添加PPA源
-        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-        sudo apt update
-        # 安装最新的GCC（假设为GCC 11）
-        sudo apt install gcc-11 g++-11
-        # 设置默认版本
-        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 100
-        sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 100
-        # 配置默认版本
-        sudo update-alternatives --config gcc
-        sudo update-alternatives --config g++
-        # 验证安装
-        gcc --version
-        g++ --version
+
     - name: Check server performance
       run: |
         echo "警告⚠"
