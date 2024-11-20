@@ -135,6 +135,8 @@ cp -rf kenzok8-packages/ddnsto package/ddnsto
 cp -rf kenzok8-packages/luci-app-ddnsto package/luci-app-ddnsto
 cp -rf kenzok8-packages/luci-app-ikoolproxy package/luci-app-ikoolproxy
 #rm -rf kenzok8-packages
+rm -rf feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 23.x feeds/packages/lang/golang
 
 git clone --depth=1 https://github.com/tty228/luci-app-serverchan.git package/luci-app-serverchan
 
