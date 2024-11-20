@@ -85,7 +85,7 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/lib/node_modules* /usr/local/share/chromium* /usr/local/share/powershell* /usr/local/share/vcpkg/ports/mysql* /usr/local/share/vcpkg/ports/snap* /usr/share/azure* /usr/share/dotnet* /usr/share/glade* /usr/share/miniconda* /usr/share/php* /usr/share/swift  /var/lib/mysql* /var/log/azure*"
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/lib/node_modules* /usr/local/share/chromium* /usr/local/share/powershell* /usr/local/share/vcpkg/ports/mysql* /usr/local/share/vcpkg/ports/snap* /usr/share/azure* /usr/share/dotnet* /usr/share/glade* /usr/share/miniconda* /usr/share/php* /usr/share/swift  /var/lib/mysql* /var/log/azure*
         sudo -E apt -y purge azure-cli* docker* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* snap* aspnetcore*
         sudo docker image prune --all --force
         sudo -E apt-get -qq update
