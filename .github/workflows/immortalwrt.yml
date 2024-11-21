@@ -170,6 +170,12 @@ jobs:
         rm -rf $GITHUB_WORKSPACE/.git
         rm -rf $GITHUB_WORKSPACE/opt
         df -Th
+        
+    - name: Cache
+      uses: klever1988/cachewrtbuild@main
+      with:
+        ccache: 'true'
+        prefix: ${{ github.workspace }}/openwrt
 
 #   - name: patch
 #     run: cp -rf $GITHUB_WORKSPACE/x86_64/5_15_patches/* openwrt/
