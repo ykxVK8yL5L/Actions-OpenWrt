@@ -94,6 +94,9 @@ jobs:
     - name: Defconfig ${{matrix.target}}
       env:
         CONFIG_FILE: x86_64/x86_64.config
+        DIY_P1_SH: diy-part1.sh
+        DIY_P2_SH: diy-part2.sh
+        MRG_ADD_SH: x86_64/x86_64.sh
       run: |
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
