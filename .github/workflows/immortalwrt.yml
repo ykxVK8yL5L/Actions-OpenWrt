@@ -93,11 +93,11 @@ jobs:
         ln -sf /mnt/openwrt/dl openwrt/dl
         ln -sf /mnt/openwrt/bin openwrt/bin
         ln -sf /mnt/openwrt/staging_dir openwrt/staging_dir
-
-    - name: Update feeds
-      working-directory: ./openwrt
-      run: |
-        ./scripts/feeds update -a
+        
+    #- name: Update feeds
+    #  working-directory: ./openwrt
+    #  run: |
+    #    ./scripts/feeds update -a
         
     - name: Defconfig ${{matrix.target}}
       env:
