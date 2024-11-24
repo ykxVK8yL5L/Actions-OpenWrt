@@ -172,23 +172,18 @@ jobs:
 
     - name: Organize files
       id: organize
-      if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      if: steps.compile.outputs.status == 'success' && !cancelled()
       run: |
-        mkdir firmware
-        mv -f openwrt/bin/targets/*/*/{*combined*,*sysupgrade*} ./firmware/ 2>/dev/null || true
-        cp openwrt/.config  ./firmware/${{matrix.target}}.config
-        cp openwrt/build_dir/target-*/linux-*/linux-*/.config ./firmware/${{matrix.target}}_kernel.config
-        cd firmware
-        echo "v${{ env.date2 }}" > version.txt
-        #md5=$((md5sum *squashfs-sysupgrade* || md5sum *squashfs-combined-efi*) | awk '{print $1}') 2>/dev/null
-        #echo $md5 >> version.txt
-        rename -v "s/^immortalwrt/${{ env.VERSION }}-openwrt/" * || true
-        rename -v "s/friendlyarm_//" *gz
-        #echo $md5 >> version.txt
-        echo ${{matrix.target}} >> version.txt     
-        rm -rf sha256sums
+        #cp openwrt/bin/packages/x86_64/packages/open-vm*.ipk openwrt/bin/targets/*/*
+        tar -zcvf AllPackages.tar.gz openwrt/bin/packages
+        mv AllPackages.tar.gz openwrt/bin/targets/*/*
+        cd openwrt/bin/targets/*/*
+        tar -zcvf Packages.tar.gz packages
+        rm -rf packages config.buildinfo feeds.buildinfo sha256sums version.buildinfo *.manifest Packages.tar.gz
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
-        
+        echo "status=success" >> "$GITHUB_OUTPUT"
+#        echo "::set-env name=FIRMWARE::$PWD"
+
 #    - name: Deploy imagebuilder to server
 #      uses: easingthemes/ssh-deploy@main
 #      with:
