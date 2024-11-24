@@ -20,7 +20,7 @@ rm -rf feeds/packages/net/mosdns
 git clone --depth=1 https://github.com/ykxVK8yL5L/luci-app-taskschedule.git taskschedule-packages
 cp -rf taskschedule-packages/luci-app-taskschedule package/luci-app-taskschedule
 
-git clone --depth=1 https://github.com/destan19/OpenAppFilter.git package/OpenAppFilter
+#git clone --depth=1 https://github.com/destan19/OpenAppFilter.git package/OpenAppFilter
 
 git clone --depth=1 https://github.com/gdy666/luci-app-lucky.git lucky-repo
 cp -rf lucky-repo/luci-app-lucky package/luci-app-lucky
