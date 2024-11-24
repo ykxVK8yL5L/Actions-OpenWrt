@@ -157,6 +157,7 @@ jobs:
         df -Th        
 
     - name: Compile the firmware
+      id: compile
       working-directory: ./openwrt
       run: |
         echo -e "$(($(nproc)+1)) thread compile"
