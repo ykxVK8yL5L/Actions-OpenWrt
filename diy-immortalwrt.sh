@@ -132,8 +132,8 @@ git clone --depth=1 https://github.com/apollo-ng/luci-theme-darkmatter.git
 cp -rf luci-theme-darkmatter/luci/themes/luci-theme-darkmatter package/luci-theme-darkmatter
 
 # 克隆 luci-theme-opentomato 仓库
-git clone --depth=1 https://github.com/solidus1983/luci-theme-opentomato.git
-cp -rf luci-theme-opentomato/luci/themes/luci-theme-opentomato package/luci-theme-opentomato
+# git clone --depth=1 https://github.com/solidus1983/luci-theme-opentomato.git
+# cp -rf luci-theme-opentomato/luci/themes/luci-theme-opentomato package/luci-theme-opentomato
 
 # 克隆 luci-theme-rosy 仓库
 git clone --depth=1 https://github.com/rosywrt/luci-theme-rosy.git
