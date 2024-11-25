@@ -112,9 +112,9 @@ jobs:
         chmod +x $DIY_P2_SH
         chmod +x $MRG_ADD_SH
         cd openwrt
+        cat .config
         $GITHUB_WORKSPACE/$DIY_P2_SH
         $GITHUB_WORKSPACE/$MRG_ADD_SH
-        cat .config
         make defconfig
         cat .config
         
