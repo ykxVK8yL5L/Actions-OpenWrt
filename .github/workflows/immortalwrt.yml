@@ -112,11 +112,10 @@ jobs:
         chmod +x $DIY_P2_SH
         chmod +x $MRG_ADD_SH
         cd openwrt
-        cat .config
         $GITHUB_WORKSPACE/$DIY_P2_SH
         $GITHUB_WORKSPACE/$MRG_ADD_SH
-        make defconfig
-        cat .config
+        cp -f $GITHUB_WORKSPACE/$CONFIG_FILE .config && make defconfig
+      
         
     - name: Download package
       working-directory: ./openwrt
