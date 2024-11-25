@@ -114,6 +114,9 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
         $GITHUB_WORKSPACE/$MRG_ADD_SH
+        ls -al $GITHUB_WORKSPACE
+        ls -al $GITHUB_WORKSPACE/x86_64
+        cat $GITHUB_WORKSPACE/$CONFIG_FILE
         cp -f $GITHUB_WORKSPACE/$CONFIG_FILE .config && make defconfig
       
         
