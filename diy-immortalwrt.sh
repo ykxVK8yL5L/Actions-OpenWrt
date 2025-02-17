@@ -98,6 +98,7 @@ cp -rf helloworld/luci-app-ssr-plus package/luci-app-ssr-plus
 git clone --depth=1 https://github.com/kenzok8/small-package.git kenzok8-packages
 cp -rf kenzok8-packages/smartdns package/smartdns
 cp -rf kenzok8-packages/luci-app-passwall package/luci-app-passwall
+cp -rf kenzok8-packages/v2ray-geoview package/v2ray-geoview
 cp -rf kenzok8-packages/luci-app-eqos package/luci-app-eqos
 cp -rf kenzok8-packages/mosdns package/mosdns
 cp -rf kenzok8-packages/v2dat package/v2dat
