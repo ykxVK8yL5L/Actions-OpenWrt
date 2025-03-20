@@ -108,7 +108,7 @@ jobs:
       run: |
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && cp -f $CONFIG_FILE openwrt/.config
-        cp -f $GITHUB_WORKSPACE/x86_64/kernel_config/config-immortalwrt-5.15 openwrt/target/linux/x86/config-5.15
+        cp -f $GITHUB_WORKSPACE/x86_64/kernel_config/config-immortalwrt-5.15 openwrt/target/linux/x86/config-6.6
         chmod +x $DIY_P2_SH
         chmod +x $MRG_ADD_SH
         cd openwrt
