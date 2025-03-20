@@ -115,6 +115,7 @@ jobs:
         $GITHUB_WORKSPACE/$DIY_P2_SH
         $GITHUB_WORKSPACE/$MRG_ADD_SH
         cp -f $GITHUB_WORKSPACE/$CONFIG_FILE .config
+        make defconfig
         
     - name: Download package
       working-directory: ./openwrt
