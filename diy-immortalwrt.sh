@@ -71,7 +71,7 @@ cp -rf openwrt-passwall2/luci-app-passwall2 package/luci-app-passwall2
 
 # 克隆 helloworld 仓库
 # git clone --depth=1 -b main https://github.com/fw876/helloworld.git
-git clone --depth=1 -b main https://github.com/sbwml/openwrt_helloworld.git
+git clone  https://github.com/sbwml/openwrt_helloworld.git
 # 从克隆的仓库中复制需要的目录
 cp -rf helloworld/naiveproxy package/naiveproxy
 cp -rf helloworld/lua-neturl package/lua-neturl
