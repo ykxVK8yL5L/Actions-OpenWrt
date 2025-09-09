@@ -83,8 +83,15 @@ jobs:
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
+        echo "OPENWRT_PATH=$PWD" >> $GITHUB_ENV
+        VERSION_INFO=$(git show -s --date=short --format="作者: %an<br/>时间: %cd<br/>内容: %s<br/>hash: %H")
+        echo "VERSION_INFO=$VERSION_INFO" >> $GITHUB_ENV
+        SOURCE_REPO="$(echo $REPO_URL | awk -F '/' '{print $(NF)}')"
+        echo "SOURCE_REPO=$SOURCE_REPO" >> $GITHUB_ENV
+        SOURCE_AUTHOR="$(echo $REPO_URL | awk -F '/' '{print $4}')"
+        echo "SOURCE_AUTHOR=$SOURCE_AUTHOR" >> $GITHUB_ENV
         #sed -i '$a src-git smpackage https://github.com/kenzok8/small-package' feeds.conf.default
-
+      
     - name: Free up disk space
       env:
         DEBIAN_FRONTEND: noninteractive
@@ -93,6 +100,15 @@ jobs:
         ln -sf /mnt/openwrt/dl openwrt/dl
         ln -sf /mnt/openwrt/bin openwrt/bin
         ln -sf /mnt/openwrt/staging_dir openwrt/staging_dir
+        
+    
+    - name: Cache Toolchain(缓存工具链)
+      if: env.CACHE_TOOLCHAIN == 'true'
+      uses: HiGarfield/cachewrtbuild@main
+      with:
+        ccache: false
+        mixkey: ${{ env.SOURCE_REPO }}-${{ env.REPO_BRANCH }}-${{ env.SOURCE_AUTHOR }}-x86
+        prefix: ${{ env.OPENWRT_PATH }}
         
     #- name: Update feeds
     #  working-directory: ./openwrt
