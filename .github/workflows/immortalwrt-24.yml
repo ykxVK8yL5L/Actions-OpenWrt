@@ -16,6 +16,7 @@ on:
         default: 'false'
     
 env:
+  CACHE_TOOLCHAIN: true
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
