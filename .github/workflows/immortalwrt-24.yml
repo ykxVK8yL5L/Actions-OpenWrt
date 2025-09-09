@@ -4,7 +4,7 @@
 # Author: kenzo
 #=================================================
 
-name: openwrt_master for immortalwrt
+name: openwrt-24.10 for immortalwrt
 
 on:
   repository_dispatch:
