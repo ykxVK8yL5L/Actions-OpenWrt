@@ -16,6 +16,8 @@ on:
         default: 'false'
     
 env:
+  REPO_URL: https://github.com/immortalwrt/immortalwrt
+  REPO_BRANCH: openwrt-24.10
   CACHE_TOOLCHAIN: true
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
@@ -76,10 +78,10 @@ jobs:
 
     - name: Clone source code
       env: 
-        REPO_URL: https://github.com/immortalwrt/immortalwrt
+        # REPO_URL: https://github.com/immortalwrt/immortalwrt
         #REPO_BRANCH: master
         # REPO_URL: https://github.com/openwrt/openwrt
-        REPO_BRANCH: openwrt-24.10
+        # REPO_BRANCH: openwrt-24.10
         TZ: Asia/Shanghai        
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
