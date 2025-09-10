@@ -60,7 +60,7 @@ cp -rf openwrt-passwall-packages/trojan-go package/trojan-go
 cp -rf openwrt-passwall-packages/trojan-plus package/trojan-plus
 cp -rf openwrt-passwall-packages/ssocks package/ssocks
 cp -rf openwrt-passwall-packages/hysteria package/hysteria
-cp -rf openwrt-passwall-packages/dns2tcp package/dns2tcp
+#cp -rf openwrt-passwall-packages/dns2tcp package/dns2tcp
 cp -rf openwrt-passwall-packages/sing-box package/sing-box
 #rm -rf openwrt-passwall-packages
 
@@ -73,9 +73,10 @@ cp -rf openwrt-passwall2/luci-app-passwall2 package/luci-app-passwall2
 #git clone --depth=1 -b master https://github.com/fw876/helloworld.git 
 git clone  https://github.com/sbwml/openwrt_helloworld.git helloworld
 # 从克隆的仓库中复制需要的目录
+cp -rf helloworld/dns2tcp package/dns2tcp
 cp -rf helloworld/naiveproxy package/naiveproxy
 cp -rf helloworld/lua-neturl package/lua-neturl
-cp -rf helloworld/gn package/gn
+#cp -rf helloworld/gn package/gn
 cp -rf helloworld/xray-core package/xray-core
 cp -rf helloworld/xray-plugin package/xray-plugin
 cp -rf helloworld/shadow-tls package/shadow-tls
@@ -86,7 +87,7 @@ cp -rf helloworld/simple-obfs package/simple-obfs
 cp -rf helloworld/trojan package/trojan
 cp -rf helloworld/v2ray-core package/v2ray-core
 cp -rf helloworld/v2ray-geodata package/v2ray-geodata
-cp -rf helloworld/sagernet-core package/sagernet-core
+#cp -rf helloworld/sagernet-core package/sagernet-core
 cp -rf helloworld/microsocks package/microsocks
 cp -rf helloworld/redsocks2 package/redsocks2
 cp -rf helloworld/ipt2socks package/ipt2socks
