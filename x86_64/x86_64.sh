@@ -24,4 +24,4 @@ sudo find ./tmp/ -name '*' -exec touch {} \; >/dev/null 2>&1
 # init openwrt config
 sudo rm -rf tmp/*
 sudo chmod -R 777 staging_dir
-sudo chnod -R 777 tmp
+sudo chmod -R 777 tmp
