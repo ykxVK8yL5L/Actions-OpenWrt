@@ -13,7 +13,7 @@ CURL_BAR="--progress-bar"
 # Toolchain Cache
 TOOLCHAIN_URL=https://github.com/oppen321/openwrt_caches/releases/download/OpenWrt_Toolchain_Cache
 echo -e "\n${GREEN_COLOR}Download Toolchain GCC13...${RES}"
-curl -L -k ${TOOLCHAIN_URL}/toolchain_gcc13_mediatek.tar.zst -o toolchain.tar.zst $CURL_BAR
+curl -L -k ${TOOLCHAIN_URL}/toolchain_gcc13_x86_64.tar.zst -o toolchain.tar.zst $CURL_BAR
 echo -e "\n${GREEN_COLOR}Process Toolchain ...${RES}"
 tar -I "zstd" -xf toolchain.tar.zst
 rm -f toolchain.tar.zst
