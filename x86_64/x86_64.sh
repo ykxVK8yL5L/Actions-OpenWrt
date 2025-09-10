@@ -18,8 +18,8 @@ echo -e "\n${GREEN_COLOR}Process Toolchain ...${RES}"
 sudo tar -I "zstd" -xf toolchain.tar.zst
 rm -f toolchain.tar.zst
 #mkdir bin
-find ./staging_dir/ -name '*' -exec touch {} \; >/dev/null 2>&1
-find ./tmp/ -name '*' -exec touch {} \; >/dev/null 2>&1
+sudo find ./staging_dir/ -name '*' -exec touch {} \; >/dev/null 2>&1
+sudo find ./tmp/ -name '*' -exec touch {} \; >/dev/null 2>&1
 
 # init openwrt config
 rm -rf tmp/*
