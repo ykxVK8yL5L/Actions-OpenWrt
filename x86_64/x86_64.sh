@@ -22,4 +22,4 @@ sudo find ./staging_dir/ -name '*' -exec touch {} \; >/dev/null 2>&1
 sudo find ./tmp/ -name '*' -exec touch {} \; >/dev/null 2>&1
 
 # init openwrt config
-rm -rf tmp/*
+sudo rm -rf tmp/*
