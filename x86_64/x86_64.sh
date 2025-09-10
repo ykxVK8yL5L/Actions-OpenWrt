@@ -15,9 +15,9 @@ TOOLCHAIN_URL=https://github.com/oppen321/openwrt_caches/releases/download/OpenW
 echo -e "\n${GREEN_COLOR}Download Toolchain GCC13...${RES}"
 curl -L -k ${TOOLCHAIN_URL}/toolchain_gcc13_x86_64.tar.zst -o toolchain.tar.zst $CURL_BAR
 echo -e "\n${GREEN_COLOR}Process Toolchain ...${RES}"
-tar -I "zstd" -xf toolchain.tar.zst
+sudo tar -I "zstd" -xf toolchain.tar.zst
 rm -f toolchain.tar.zst
-mkdir bin
+#mkdir bin
 find ./staging_dir/ -name '*' -exec touch {} \; >/dev/null 2>&1
 find ./tmp/ -name '*' -exec touch {} \; >/dev/null 2>&1
 
