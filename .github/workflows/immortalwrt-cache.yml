@@ -4,7 +4,7 @@
 # Author: kenzo
 #=================================================
 
-name: openwrt-24.10 for immortalwrt for cache
+name: openwrt-25.12 for immortalwrt for cache
 
 on:
   repository_dispatch:
