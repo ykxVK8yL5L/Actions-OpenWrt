@@ -1,4 +1,4 @@
-name: Build releases
+name: sbwml Build releases for 25.12
 
 on:
   workflow_dispatch:
