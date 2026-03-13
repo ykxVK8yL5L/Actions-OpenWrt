@@ -77,7 +77,6 @@ jobs:
         export KERNEL_CLANG_LTO=y BUILD_FAST=y ENABLE_CCACHE=y ENABLE_OTA=y ENABLE_BPF=y ENABLE_LTO=y ENABLE_LRNG=y USE_GCC15=y ENABLE_MOLD=y
         bash <(curl -sS https://init2.cooluc.com/build.sh) ${{ matrix.tag.type }} ${{ matrix.model }}
         #bash <(curl -sS https://init2.cooluc.com/build.sh) rc2 x86_64
-
         cd openwrt
         tags=$(git describe --abbrev=0 --tags)
         echo "latest_release=$tags" >>$GITHUB_ENV
@@ -87,6 +86,7 @@ jobs:
       working-directory: /builder
       run: |
         cd openwrt
+        sed -i 's/^CONFIG_TARGET_ROOTFS_PARTSIZE=.*/CONFIG_TARGET_ROOTFS_PARTSIZE=2048/' .config
         make V=s IGNORE_ERRORS="n m"
 
     - name: Prepare Firmware Files
