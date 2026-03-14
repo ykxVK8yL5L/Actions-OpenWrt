@@ -131,7 +131,8 @@ jobs:
     - name: Build toolchain
       run: |
         cd openwrt
-        make toolchain/install -j$(nproc)
+        #make toolchain/install -j$(nproc)
+        make -j$(($(nproc)+1)) || make -j1 V=s
         
     # - name: Defconfig ${{matrix.target}}
     #   env:
