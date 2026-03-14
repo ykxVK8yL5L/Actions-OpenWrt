@@ -117,38 +117,51 @@ jobs:
     #  working-directory: ./openwrt
     #  run: |
     #    ./scripts/feeds update -a
-        
-    - name: Defconfig ${{matrix.target}}
-      env:
-        CONFIG_FILE: x86_64/immortalwrt.config
-        DIY_P1_SH: diy-part1.sh
-        DIY_P2_SH: diy-immortalwrt.sh
-        MRG_ADD_SH: x86_64/x86_64.sh
+
+    - name: Configure
       run: |
-        [ -e files ] && mv files openwrt/files
-        [ -e $CONFIG_FILE ] && cp -f $CONFIG_FILE openwrt/.config
-        #cp -f $GITHUB_WORKSPACE/x86_64/kernel_config/config-immortalwrt-5.15 openwrt/target/linux/x86/config-6.6
-        chmod +x $DIY_P2_SH
-        chmod +x $MRG_ADD_SH
         cd openwrt
-        $GITHUB_WORKSPACE/$DIY_P2_SH
-        $GITHUB_WORKSPACE/$MRG_ADD_SH
+        scripts/config --set-val CONFIG_TARGET_x86 y
+        scripts/config --set-val CONFIG_TARGET_x86_64 y
+        scripts/config --set-val CONFIG_TARGET_x86_64_Generic y
         make defconfig
         
-    - name: Download package
-      working-directory: ./openwrt
+    - name: Build toolchain
       run: |
-        make download -j$(nproc)
-        find dl -size -1024c -exec rm -f {} \;
-
-    - name: Check space usage
-      run: |
-        shopt -s extglob
         cd openwrt
-        if [[ -f staging_dir/*${{ env.MTARGET }}*/bin ]]; then
-            rm -rf staging_dir/!(*${{ env.MTARGET }}*|host|hostpkg) build_dir/!(*${{ env.MTARGET }}*|host|hostpkg)
-        fi
-        df -hT
+        make toolchain/install -j$(nproc)
+        
+    # - name: Defconfig ${{matrix.target}}
+    #   env:
+    #     CONFIG_FILE: x86_64/immortalwrt.config
+    #     DIY_P1_SH: diy-part1.sh
+    #     DIY_P2_SH: diy-immortalwrt.sh
+    #     MRG_ADD_SH: x86_64/x86_64.sh
+    #   run: |
+    #     [ -e files ] && mv files openwrt/files
+    #     [ -e $CONFIG_FILE ] && cp -f $CONFIG_FILE openwrt/.config
+    #     #cp -f $GITHUB_WORKSPACE/x86_64/kernel_config/config-immortalwrt-5.15 openwrt/target/linux/x86/config-6.6
+    #     chmod +x $DIY_P2_SH
+    #     chmod +x $MRG_ADD_SH
+    #     cd openwrt
+    #     $GITHUB_WORKSPACE/$DIY_P2_SH
+    #     $GITHUB_WORKSPACE/$MRG_ADD_SH
+    #     make defconfig
+        
+    # - name: Download package
+    #   working-directory: ./openwrt
+    #   run: |
+    #     make download -j$(nproc)
+    #     find dl -size -1024c -exec rm -f {} \;
+
+    # - name: Check space usage
+    #   run: |
+    #     shopt -s extglob
+    #     cd openwrt
+    #     if [[ -f staging_dir/*${{ env.MTARGET }}*/bin ]]; then
+    #         rm -rf staging_dir/!(*${{ env.MTARGET }}*|host|hostpkg) build_dir/!(*${{ env.MTARGET }}*|host|hostpkg)
+    #     fi
+    #     df -hT
 
     - name: Check server performance
       run: |
@@ -168,35 +181,35 @@ jobs:
         echo "硬盘详情："
         df -Th        
 
-    - name: Compile the firmware
-      id: compile
-      working-directory: ./openwrt
-      run: |
-        echo -e "$(($(nproc)+1)) thread compile"
-        make -j$(($(nproc)+1)) || make -j1 V=s      
-        #make -j1 V=s
-        echo "status=success" >> "$GITHUB_OUTPUT"
+    # - name: Compile the firmware
+    #   id: compile
+    #   working-directory: ./openwrt
+    #   run: |
+    #     echo -e "$(($(nproc)+1)) thread compile"
+    #     make -j$(($(nproc)+1)) || make -j1 V=s      
+    #     #make -j1 V=s
+    #     echo "status=success" >> "$GITHUB_OUTPUT"
 
-    - name: Upload bin directory
-      uses: actions/upload-artifact@main
-      if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
-      with:
-        name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        path: openwrt/bin
+    # - name: Upload bin directory
+    #   uses: actions/upload-artifact@main
+    #   if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
+    #   with:
+    #     name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+    #     path: openwrt/bin
 
-    - name: Organize files
-      id: organize
-      if: steps.compile.outputs.status == 'success' && !cancelled()
-      run: |
-        #cp openwrt/bin/packages/x86_64/packages/open-vm*.ipk openwrt/bin/targets/*/*
-        tar -zcvf AllPackages.tar.gz openwrt/bin/packages
-        mv AllPackages.tar.gz openwrt/bin/targets/*/*
-        cd openwrt/bin/targets/*/*
-        tar -zcvf Packages.tar.gz packages
-        rm -rf packages config.buildinfo feeds.buildinfo sha256sums version.buildinfo *.manifest Packages.tar.gz
-        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
-        echo "status=success" >> "$GITHUB_OUTPUT"
-#        echo "::set-env name=FIRMWARE::$PWD"
+    # - name: Organize files
+    #   id: organize
+    #   if: steps.compile.outputs.status == 'success' && !cancelled()
+    #   run: |
+    #     #cp openwrt/bin/packages/x86_64/packages/open-vm*.ipk openwrt/bin/targets/*/*
+    #     tar -zcvf AllPackages.tar.gz openwrt/bin/packages
+    #     mv AllPackages.tar.gz openwrt/bin/targets/*/*
+    #     cd openwrt/bin/targets/*/*
+    #     tar -zcvf Packages.tar.gz packages
+    #     rm -rf packages config.buildinfo feeds.buildinfo sha256sums version.buildinfo *.manifest Packages.tar.gz
+    #     echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+    #     echo "status=success" >> "$GITHUB_OUTPUT"
+    #    echo "::set-env name=FIRMWARE::$PWD"
 
 #    - name: Deploy imagebuilder to server
 #      uses: easingthemes/ssh-deploy@main
@@ -209,12 +222,12 @@ jobs:
 #        REMOTE_USER: root
 #        TARGET: "/www/wwwroot/${{ secrets.REMOTE_HOST }}/op/firmware/${{matrix.target}}/"       
       
-    - name: Upload firmware directory
-      uses: actions/upload-artifact@main
-      if: steps.organize.outputs.status == 'success' && !cancelled()
-      with:
-        name: ${{ env.date3 }} _${{matrix.target}}
-        path: ${{ env.FIRMWARE }}
+    # - name: Upload firmware directory
+    #   uses: actions/upload-artifact@main
+    #   if: steps.organize.outputs.status == 'success' && !cancelled()
+    #   with:
+    #     name: ${{ env.date3 }} _${{matrix.target}}
+    #     path: ${{ env.FIRMWARE }}
         
     # - name: Set Up Docker Buildx
     #   uses: docker/setup-buildx-action@master
