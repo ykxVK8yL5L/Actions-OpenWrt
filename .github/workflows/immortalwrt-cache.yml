@@ -4,7 +4,7 @@
 # Author: kenzo
 #=================================================
 
-name: openwrt-25.12 for immortalwrt for cache
+name: openwrt-24.10 for immortalwrt for cache
 
 on:
   repository_dispatch:
@@ -17,7 +17,7 @@ on:
     
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
-  REPO_BRANCH: openwrt-25.12
+  REPO_BRANCH: openwrt-24.10
   CACHE_TOOLCHAIN: true
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
@@ -275,8 +275,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.RELEASES_TOKEN }}
       with:
         files: "${{ env.FIRMWARE }}/*"
-        name: ${{ env.date2 }} ${{matrix.target}}
-        tag_name: ${{ env.date }}_${{matrix.target}}
+        name: ${{ env.date2 }} ${{matrix.target}}-cache
+        tag_name: ${{ env.date }}_${{matrix.target}}-cache
         body_path: release.txt
 
     - name: Delete workflow runs
