@@ -119,11 +119,13 @@ jobs:
     #    ./scripts/feeds update -a
 
     - name: Configure
+      working-directory: ./openwrt
       run: |
-        cd openwrt
-        scripts/config --set-val CONFIG_TARGET_x86 y
-        scripts/config --set-val CONFIG_TARGET_x86_64 y
-        scripts/config --set-val CONFIG_TARGET_x86_64_Generic y
+        cat >> .config <<EOF
+        CONFIG_TARGET_x86=y
+        CONFIG_TARGET_x86_64=y
+        CONFIG_TARGET_x86_64_Generic=y
+        EOF
         make defconfig
         
     - name: Build toolchain
