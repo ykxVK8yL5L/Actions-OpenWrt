@@ -4,7 +4,7 @@
 # Author: kenzo
 #=================================================
 
-name: openwrt for immortalwrt
+name: Build openwrt for immortalwrt
 
 on:
   repository_dispatch:
