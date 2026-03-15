@@ -20,7 +20,7 @@ rm -rf feeds/packages/net/mosdns
 git clone --depth=1 https://github.com/ykxVK8yL5L/luci-app-taskschedule.git taskschedule-packages
 cp -rf taskschedule-packages/luci-app-taskschedule package/luci-app-taskschedule
 
-#git clone --depth=1 https://github.com/destan19/OpenAppFilter.git package/OpenAppFilter
+git clone --depth=1 https://github.com/destan19/OpenAppFilter.git package/OpenAppFilter
 
 git clone --depth=1 https://github.com/gdy666/luci-app-lucky.git lucky-repo
 cp -rf lucky-repo/luci-app-lucky package/luci-app-lucky
@@ -31,10 +31,10 @@ cp -rf lucky-repo/lucky package/lucky
 #svn co https://github.com/immortalwrt/immortalwrt/trunk/include
 #svn co https://github.com/immortalwrt/immortalwrt/trunk/scripts
 
-git clone --depth=1 https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
+#git clone --depth=1 https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
 git clone --depth=1 https://github.com/jerrykuku/luci-app-ttnode.git package/luci-app-ttnode
 git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
-git clone --depth=1 https://github.com/jerrykuku/luci-app-vssr.git package/luci-app-vssr
+#git clone --depth=1 https://github.com/jerrykuku/luci-app-vssr.git package/luci-app-vssr
 git clone --depth=1 https://github.com/kongfl888/luci-app-adguardhome.git package/luci-app-adguardhome
 git clone --depth=1 https://github.com/lisaac/luci-app-dockerman.git
 cp -rf luci-app-dockerman/applications/luci-app-dockerman package/luci-app-dockerman
@@ -65,14 +65,16 @@ cp -rf openwrt-passwall-packages/sing-box package/sing-box
 #rm -rf openwrt-passwall-packages
 
 # 克隆openwrt-passwall2仓库
-git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2.git
-cp -rf openwrt-passwall2/luci-app-passwall2 package/luci-app-passwall2
+#git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2.git
+#cp -rf openwrt-passwall2/luci-app-passwall2 package/luci-app-passwall2
 #rm -rf openwrt-passwall2
 
 # 克隆 helloworld 仓库
 #git clone --depth=1 -b master https://github.com/fw876/helloworld.git 
 git clone  https://github.com/sbwml/openwrt_helloworld.git helloworld
 # 从克隆的仓库中复制需要的目录
+cp -rf openwrt-passwall2/luci-app-passwall2 package/luci-app-passwall2
+rm -rf openwrt-passwall2
 cp -rf helloworld/dns2tcp package/dns2tcp
 cp -rf helloworld/naiveproxy package/naiveproxy
 cp -rf helloworld/lua-neturl package/lua-neturl
@@ -97,7 +99,7 @@ cp -rf helloworld/luci-app-ssr-plus package/luci-app-ssr-plus
 #rm -rf helloworld
 
 # 克隆 kenzok8-packages 仓库
-git clone --depth=1 https://github.com/kenzok8/small-package.git kenzok8-packages
+git clone --depth=1 https://github.com/kenzok8/small.git kenzok8-packages
 cp -rf kenzok8-packages/smartdns package/smartdns
 cp -rf kenzok8-packages/luci-app-passwall package/luci-app-passwall
 cp -rf kenzok8-packages/v2ray-geoview package/v2ray-geoview
