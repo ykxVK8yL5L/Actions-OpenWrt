@@ -196,7 +196,7 @@ jobs:
         rm -rf packages config.buildinfo feeds.buildinfo sha256sums version.buildinfo *.manifest Packages.tar.gz
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> "$GITHUB_OUTPUT"
-        echo "::set-env name=FIRMWARE::$PWD"
+        #echo "::set-env name=FIRMWARE::$PWD"
 
 #    - name: Deploy imagebuilder to server
 #      uses: easingthemes/ssh-deploy@main
