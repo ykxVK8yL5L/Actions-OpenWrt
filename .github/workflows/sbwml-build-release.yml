@@ -2,8 +2,7 @@ name: sbwml Build releases for 25.12
 
 on:
   workflow_dispatch:
-  # repository_dispatch:
-  #   types: [release]
+
 
 jobs:
   build:
@@ -76,7 +75,6 @@ jobs:
       run: |
         export KERNEL_CLANG_LTO=y BUILD_FAST=y ENABLE_CCACHE=y ENABLE_OTA=y ENABLE_BPF=y ENABLE_LTO=y ENABLE_LRNG=y USE_GCC15=y ENABLE_MOLD=y
         bash <(curl -sS https://init2.cooluc.com/build.sh) ${{ matrix.tag.type }} ${{ matrix.model }}
-        #bash <(curl -sS https://init2.cooluc.com/build.sh) rc2 x86_64
         cd openwrt
         tags=$(git describe --abbrev=0 --tags)
         echo "latest_release=$tags" >>$GITHUB_ENV
@@ -124,15 +122,47 @@ jobs:
     - name: Create release
       uses: ncipollo/release-action@main
       with:
-        name: OpenWrt-${{ env.latest_release }}-25.12
+        name: OpenWrt-${{ env.latest_release }}
         allowUpdates: true
         tag: ${{ env.latest_release }}
         commit: main
         replacesArtifacts: true
         makeLatest: true
-        token: ${{ secrets.RELEASES_TOKEN }}
+        token: ${{ secrets.workflow_token }}
         bodyFile: ${{ env.build_dir }}/bodyFile
         artifacts: |
           ${{ env.build_dir }}/rom/*
 
+    - name: Copy build information
+      working-directory: /builder
+      run: |
+        cp info/manifest.txt rom/
+        cp info/config.buildinfo rom/
+        cp info/sha256sums.txt rom/
+        rm -rf rom/buildinfo_*
 
+    - name: Upload Firmware - FTP
+      uses: sbwml/FTP-Deploy-Action@master
+      with:
+        dangerous-clean-slate: true
+        username: openwrt
+        server: ${{ secrets.ftp_address }}
+        password: ${{ secrets.ftp_password }}
+        server-dir: release/${{ matrix.model }}/
+        local-dir: ${{ env.build_dir }}/rom/
+
+    - name: Release OTA
+      uses: sbwml/FTP-Deploy-Action@master
+      with:
+        username: ota
+        server: ${{ secrets.ftp_address }}
+        password: ${{ secrets.ftp_password }}
+        server-dir: release/${{ matrix.model }}/
+        local-dir: ${{ env.build_dir }}/openwrt/ota/
+        dangerous-clean-slate: true
+
+    - name: Upload Firmware - aDrive
+      if: ${{ matrix.model != 'armv8' }}
+      run: |
+        sshpass -p ${{ secrets.user_password }} ssh -o StrictHostKeyChecking=no root@${{ secrets.guangzhou_address }} >/dev/null 2>&1
+        sshpass -p ${{ secrets.user_password }} ssh root@${{ secrets.guangzhou_address }} "/opt/sbin/fw-upload ${{ matrix.model }}"
