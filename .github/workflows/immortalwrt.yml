@@ -121,7 +121,8 @@ jobs:
     - name: Defconfig ${{matrix.target}} mini
       working-directory: ./openwrt
       if: env.IS_MINI == 'true'
-      CONFIG_FILE: x86_64/immortalwrt.mini.config
+      env:
+        CONFIG_FILE: x86_64/immortalwrt.mini.config
       run: |
         [ -e $CONFIG_FILE ] && cp -f $CONFIG_FILE openwrt/.config
         cd openwrt
