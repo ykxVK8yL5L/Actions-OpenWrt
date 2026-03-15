@@ -73,8 +73,7 @@ cp -rf openwrt-passwall-packages/sing-box package/sing-box
 #git clone --depth=1 -b master https://github.com/fw876/helloworld.git 
 git clone  https://github.com/sbwml/openwrt_helloworld.git helloworld
 # 从克隆的仓库中复制需要的目录
-cp -rf openwrt-passwall2/luci-app-passwall2 package/luci-app-passwall2
-rm -rf openwrt-passwall2
+cp -rf helloworld/luci-app-passwall2 package/luci-app-passwall2
 cp -rf helloworld/dns2tcp package/dns2tcp
 cp -rf helloworld/dns2socks-rust package/dns2socks-rust
 cp -rf helloworld/shadowsocks-libev package/shadowsocks-libev
@@ -100,32 +99,30 @@ cp -rf helloworld/tuic-client package/tuic-client
 cp -rf helloworld/luci-app-ssr-plus package/luci-app-ssr-plus
 #rm -rf helloworld
 
-git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages-all
-cp -rf kenzok8-packages-all/luci-lib-taskd package/luci-lib-taskd
-rm -rf kenzok8-packages-all
+git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
+cp -rf kenzok8-packages/luci-lib-taskd package/luci-lib-taskd
+cp -rf kenzok8-packages/taskd package/taskd
+cp -rf kenzok8-packages/smartdns package/smartdns
+cp -rf kenzok8-packages/luci-app-eqos package/luci-app-eqos
+cp -rf kenzok8-packages/luci-lib-xterm package/luci-lib-xterm
+cp -rf kenzok8-packages/ddnsto package/ddnsto
+cp -rf kenzok8-packages/luci-app-ddnsto package/luci-app-ddnsto
+rm -rf kenzok8-packages
 
 # 克隆 kenzok8-packages 仓库
 #https://github.com/kenzok8/openwrt-packages
-git clone --depth=1 https://github.com/kenzok8/small.git kenzok8-packages
-cp -rf kenzok8-packages/smartdns package/smartdns
-cp -rf kenzok8-packages/luci-app-passwall package/luci-app-passwall
-cp -rf kenzok8-packages/v2ray-geoview package/v2ray-geoview
-cp -rf kenzok8-packages/luci-app-eqos package/luci-app-eqos
-cp -rf kenzok8-packages/mosdns package/mosdns
-cp -rf kenzok8-packages/v2dat package/v2dat
-cp -rf kenzok8-packages/wrtbwmon package/wrtbwmon
-cp -rf kenzok8-packages/luci-app-mosdns package/luci-app-mosdns
-cp -rf kenzok8-packages/luci-theme-edge package/luci-theme-edge
-cp -rf kenzok8-packages/luci-lib-taskd package/luci-lib-taskd
-cp -rf kenzok8-packages/taskd package/taskd
-cp -rf kenzok8-packages/luci-lib-xterm package/luci-lib-xterm
-cp -rf kenzok8-packages/alist package/alist
-cp -rf kenzok8-packages/luci-app-alist package/luci-app-alist
-cp -rf kenzok8-packages/luci-app-advanced package/luci-app-advanced
-cp -rf kenzok8-packages/ddnsto package/ddnsto
-cp -rf kenzok8-packages/luci-app-ddnsto package/luci-app-ddnsto
-cp -rf kenzok8-packages/luci-app-ikoolproxy package/luci-app-ikoolproxy
-#rm -rf kenzok8-packages
+git clone --depth=1 https://github.com/kenzok8/small.git kenzok8-small
+
+cp -rf kenzok8-small/luci-app-passwall package/luci-app-passwall
+#cp -rf kenzok8-small/v2ray-geoview package/v2ray-geoview
+cp -rf kenzok8-small/mosdns package/mosdns
+cp -rf kenzok8-small/v2dat package/v2dat
+#cp -rf kenzok8-small/wrtbwmon package/wrtbwmon
+cp -rf kenzok8-small/luci-app-mosdns package/luci-app-mosdns
+#cp -rf kenzok8-small/luci-theme-edge package/luci-theme-edge
+#cp -rf kenzok8-small/luci-app-advanced package/luci-app-advanced
+#cp -rf kenzok8-small/luci-app-ikoolproxy package/luci-app-ikoolproxy
+#rm -rf kenzok8-small
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 23.x feeds/packages/lang/golang
 
