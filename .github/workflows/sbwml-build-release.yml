@@ -68,6 +68,10 @@ jobs:
       id: compile
       continue-on-error: true
       working-directory: /builder
+      env:
+        git_name: private
+        git_password: ${{ secrets.ftp_password }}
+        private_url: ${{ secrets.private_url }}
       run: |
         export KERNEL_CLANG_LTO=y BUILD_FAST=y ENABLE_CCACHE=y ENABLE_OTA=y ENABLE_BPF=y ENABLE_LTO=y ENABLE_LRNG=y USE_GCC15=y ENABLE_MOLD=y
         bash <(curl -sS https://init.cooluc.com/build.sh) ${{ matrix.tag.type }} ${{ matrix.model }}
