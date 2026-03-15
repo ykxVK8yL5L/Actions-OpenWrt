@@ -76,6 +76,8 @@ git clone  https://github.com/sbwml/openwrt_helloworld.git helloworld
 cp -rf openwrt-passwall2/luci-app-passwall2 package/luci-app-passwall2
 rm -rf openwrt-passwall2
 cp -rf helloworld/dns2tcp package/dns2tcp
+cp -rf helloworld/dns2socks-rust package/dns2socks-rust
+cp -rf helloworld/shadowsocks-libev package/shadowsocks-libev
 cp -rf helloworld/naiveproxy package/naiveproxy
 cp -rf helloworld/lua-neturl package/lua-neturl
 #cp -rf helloworld/gn package/gn
@@ -98,7 +100,12 @@ cp -rf helloworld/tuic-client package/tuic-client
 cp -rf helloworld/luci-app-ssr-plus package/luci-app-ssr-plus
 #rm -rf helloworld
 
+git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages-all
+cp -rf kenzok8-packages-all/luci-lib-taskd package/luci-lib-taskd
+rm -rf kenzok8-packages-all
+
 # 克隆 kenzok8-packages 仓库
+#https://github.com/kenzok8/openwrt-packages
 git clone --depth=1 https://github.com/kenzok8/small.git kenzok8-packages
 cp -rf kenzok8-packages/smartdns package/smartdns
 cp -rf kenzok8-packages/luci-app-passwall package/luci-app-passwall
