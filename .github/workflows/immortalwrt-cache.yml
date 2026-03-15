@@ -135,37 +135,20 @@ jobs:
          #$GITHUB_WORKSPACE/$MRG_ADD_SH
         make defconfig
         
-    # - name: Defconfig ${{matrix.target}}
-    #   env:
-    #     CONFIG_FILE: x86_64/immortalwrt.config
-    #     DIY_P1_SH: diy-part1.sh
-    #     DIY_P2_SH: diy-immortalwrt.sh
-    #     MRG_ADD_SH: x86_64/x86_64.sh
-    #   run: |
-    #     [ -e files ] && mv files openwrt/files
-    #     [ -e $CONFIG_FILE ] && cp -f $CONFIG_FILE openwrt/.config
-    #     #cp -f $GITHUB_WORKSPACE/x86_64/kernel_config/config-immortalwrt-5.15 openwrt/target/linux/x86/config-6.6
-    #     chmod +x $DIY_P2_SH
-    #     chmod +x $MRG_ADD_SH
-    #     cd openwrt
-    #     $GITHUB_WORKSPACE/$DIY_P2_SH
-    #     $GITHUB_WORKSPACE/$MRG_ADD_SH
-    #     make defconfig
+    - name: Download package
+      working-directory: ./openwrt
+      run: |
+        make download -j$(nproc)
+        find dl -size -1024c -exec rm -f {} \;
         
-    # - name: Download package
-    #   working-directory: ./openwrt
-    #   run: |
-    #     make download -j$(nproc)
-    #     find dl -size -1024c -exec rm -f {} \;
-
-    # - name: Check space usage
-    #   run: |
-    #     shopt -s extglob
-    #     cd openwrt
-    #     if [[ -f staging_dir/*${{ env.MTARGET }}*/bin ]]; then
-    #         rm -rf staging_dir/!(*${{ env.MTARGET }}*|host|hostpkg) build_dir/!(*${{ env.MTARGET }}*|host|hostpkg)
-    #     fi
-    #     df -hT
+    - name: Check space usage
+      run: |
+        shopt -s extglob
+        cd openwrt
+        if [[ -f staging_dir/*${{ env.MTARGET }}*/bin ]]; then
+            rm -rf staging_dir/!(*${{ env.MTARGET }}*|host|hostpkg) build_dir/!(*${{ env.MTARGET }}*|host|hostpkg)
+        fi
+        df -hT
 
     - name: Check server performance
       run: |
