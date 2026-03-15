@@ -4,7 +4,7 @@
 # Author: kenzo
 #=================================================
 
-name: openwrt-25.12 for immortalwrt
+name: openwrt for immortalwrt
 
 on:
   repository_dispatch:
@@ -41,7 +41,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [${{ inputs.branch }}]
+        target: ${{ fromJSON(format('["{0}"]', inputs.branch)) }}
     
     steps:
     - name: Checkout
