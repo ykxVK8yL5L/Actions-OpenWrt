@@ -35,7 +35,8 @@ cp -rf lucky-repo/lucky package/lucky
 git clone --depth=1 https://github.com/jerrykuku/luci-app-ttnode.git package/luci-app-ttnode
 git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 #git clone --depth=1 https://github.com/jerrykuku/luci-app-vssr.git package/luci-app-vssr
-git clone --depth=1 https://github.com/kongfl888/luci-app-adguardhome.git package/luci-app-adguardhome
+#git clone --depth=1 https://github.com/kongfl888/luci-app-adguardhome.git package/luci-app-adguardhome
+git clone --depth=1 https://github.com/w9315273/luci-app-adguardhome.git package/luci-app-adguardhome
 git clone --depth=1 https://github.com/lisaac/luci-app-dockerman.git
 cp -rf luci-app-dockerman/applications/luci-app-dockerman package/luci-app-dockerman
 #rm -rf luci-app-dockerman
