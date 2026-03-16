@@ -124,8 +124,9 @@ jobs:
       env:
         CONFIG_FILE: x86_64/immortalwrt.mini.config
       run: |
-        [ -e $CONFIG_FILE ] && cp -f $CONFIG_FILE openwrt/.config
+        #[ -e $CONFIG_FILE ] && cp -f $CONFIG_FILE openwrt/.config
         cd openwrt
+        cp -f $GITHUB_WORKSPACE/$CONFIG_FILE .config
         make defconfig
 
     - name: Defconfig ${{matrix.target}}
@@ -136,13 +137,13 @@ jobs:
         DIY_P2_SH: diy-immortalwrt.sh
         MRG_ADD_SH: x86_64/x86_64.sh
       run: |
-        [ -e $CONFIG_FILE ] && cp -f $CONFIG_FILE openwrt/.config
+        #[ -e $CONFIG_FILE ] && cp -f $CONFIG_FILE openwrt/.config
         chmod +x $DIY_P2_SH
         chmod +x $MRG_ADD_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
         $GITHUB_WORKSPACE/$MRG_ADD_SH
-        #cp -f $GITHUB_WORKSPACE/$CONFIG_FILE .config
+        cp -f $GITHUB_WORKSPACE/$CONFIG_FILE .config
         make defconfig
         
     - name: Download package
