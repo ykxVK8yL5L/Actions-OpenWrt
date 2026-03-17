@@ -31,7 +31,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: ${{ fromJSON(format('["{0}"]', inputs.branch)) }}
+        target: [openwrt-25.12]
     
     steps:
     - name: Checkout
