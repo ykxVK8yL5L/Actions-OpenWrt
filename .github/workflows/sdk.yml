@@ -53,8 +53,8 @@ jobs:
           DIY_P2_SH: diy-immortalwrt.sh
           MRG_ADD_SH: x86_64/x86_64.sh
         run: |
-          chmod +x $DIY_P2_SH
-          chmod +x $MRG_ADD_SH
+          chmod +x $GITHUB_WORKSPACE/$DIY_P2_SH
+          chmod +x $GITHUB_WORKSPACE/$MRG_ADD_SH
           $GITHUB_WORKSPACE/$DIY_P2_SH
           $GITHUB_WORKSPACE/$MRG_ADD_SH
 
