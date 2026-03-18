@@ -9,12 +9,23 @@ name: Build release for immortalwrt 25.12
 on:
   repository_dispatch:
   workflow_dispatch:
+    inputs:
+        branch:
+          type: choice
+          description: 编译版本
+          options: 
+          - "openwrt-25.12"
+          - "openwrt-24.10"
+          - "openwrt-23.05"
+        is-mini:
+          type: boolean
+          description: "最小化编译，只为缓存工具链节省编译时间"
 
  
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
-  REPO_BRANCH: openwrt-25.12
-  IS_MINI: false
+  REPO_BRANCH: ${{ inputs.branch }}
+  IS_MINI: ${{ inputs.is-mini }}
   CACHE_TOOLCHAIN: true
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
@@ -31,7 +42,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [openwrt-25.12]
+        target: ${{ fromJSON(format('["{0}"]', inputs.branch)) }}
     
     steps:
     - name: Checkout
@@ -114,7 +125,6 @@ jobs:
       env:
         CONFIG_FILE: x86_64/immortalwrt.mini.config
       run: |
-        #[ -e $CONFIG_FILE ] && cp -f $CONFIG_FILE openwrt/.config
         cd openwrt
         cp -f $GITHUB_WORKSPACE/$CONFIG_FILE .config
         make defconfig
@@ -127,7 +137,6 @@ jobs:
         DIY_P2_SH: diy-immortalwrt.sh
         MRG_ADD_SH: x86_64/x86_64.sh
       run: |
-        #[ -e $CONFIG_FILE ] && cp -f $CONFIG_FILE openwrt/.config
         chmod +x $DIY_P2_SH
         chmod +x $MRG_ADD_SH
         cd openwrt
