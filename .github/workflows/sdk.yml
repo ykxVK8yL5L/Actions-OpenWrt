@@ -51,19 +51,13 @@ jobs:
       - name: Update & install feeds
         working-directory: sdk
         env:
-          CONFIG_FILE: x86_64/immortalwrt.config
-          DIY_P1_SH: diy-part1.sh
-          DIY_P2_SH: diy-immortalwrt.sh
-          MRG_ADD_SH: x86_64/x86_64.sh
+          DIY_SH: diy-immortalwrt-sdk.sh
         run: |
-          #chmod +x $GITHUB_WORKSPACE/$DIY_P2_SH
-          #chmod +x $GITHUB_WORKSPACE/$MRG_ADD_SH
-          #$GITHUB_WORKSPACE/$DIY_P2_SH
-          #$GITHUB_WORKSPACE/$MRG_ADD_SH
+          chmod +x $GITHUB_WORKSPACE/$DIY_SH
+          $GITHUB_WORKSPACE/$DIY_SH
           ./scripts/feeds update -a
           ./scripts/feeds install -a -f
-          
-
+        
       - name: Select package
         working-directory: sdk
         run: |
