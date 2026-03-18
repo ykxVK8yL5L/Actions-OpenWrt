@@ -125,7 +125,6 @@ jobs:
       env:
         CONFIG_FILE: x86_64/immortalwrt.mini.config
       run: |
-        cd openwrt
         cp -f $GITHUB_WORKSPACE/$CONFIG_FILE .config
         make defconfig
 
