@@ -73,10 +73,12 @@ jobs:
         working-directory: sdk
         run: |
           mkdir -p ../output
-          find bin/packages -name "*.apk" -exec cp {} ../output/ \;
+          find bin/packages \( -name "*.apk" -o -name "*.ipk" \) -exec cp {} ../output/ +;
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: ipk-${{ matrix.package }}
-          path: output/*.apk
+          path: |
+            output/*.apk
+            output/*.ipk
