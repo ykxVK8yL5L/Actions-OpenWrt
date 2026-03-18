@@ -35,6 +35,9 @@ jobs:
       matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
       - name: Install dependencies
         run: |
           sudo bash -c 'bash <(curl -s https://build-scripts.immortalwrt.org/init_build_environment.sh)' 
