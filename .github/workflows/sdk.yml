@@ -21,8 +21,11 @@ jobs:
       - name: Parse package list
         id: set-matrix
         run: |
-          PKGS=$(echo "${{ github.event.inputs.packages }}" | tr '\n' ' ')
-          JSON=$(printf '%s\n' $PKGS | jq -R . | jq -s .)
+          INPUT="${{ github.event.inputs.packages }}"
+          PKGS=$(echo "$INPUT" | tr '\n' ' ' | xargs -n1)
+          JSON=$(printf '%s\n' $PKGS | jq -R . | jq -cs .)
+          echo "Packages:"
+          echo "$JSON"
           echo "matrix={\"package\":$JSON}" >> $GITHUB_OUTPUT
 
   build:
