@@ -227,8 +227,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.RELEASES_TOKEN }}
       with:
         files: "${{ env.FIRMWARE }}/*"
-        name: ${{matrix.target}} ${{ env.date2 }} ${{ env.is-mini == 'true' && ' mini' || 'release' }}
-        tag_name: ${{matrix.target}}_${{ env.date }}_${{ env.is-mini == 'true' && ' mini' || 'release' }}
+        name: ${{matrix.target}} ${{ env.date2 }} ${{ env.IS_MINI == 'true' && ' mini' || 'release' }}
+        tag_name: ${{matrix.target}}_${{ env.date }}_${{ env.IS_MINI == 'true' && ' mini' || 'release' }}
         body_path: release.txt
 
     # - name: Remove old Releases
