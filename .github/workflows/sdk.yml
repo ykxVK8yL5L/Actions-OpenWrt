@@ -7,8 +7,27 @@ on:
         description: "OpenWrt SDK URL (.tar.xz)"
         required: true
         default: ""
+      packages:
+        description: "Packages to build (space or newline separated)"
+        required: true
+        default: ""
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Parse package list
+        id: set-matrix
+        run: |
+          INPUT="${{ github.event.inputs.packages }}"
+          PKGS=$(echo "$INPUT" | tr '\n' ' ' | xargs -n1)
+          JSON=$(printf '%s\n' $PKGS | jq -R . | jq -cs .)
+          echo "Packages:"
+          echo "$JSON"
+          echo "matrix={\"package\":$JSON}" >> $GITHUB_OUTPUT
+          
   build:
     runs-on: ubuntu-latest
     steps:
@@ -46,9 +65,8 @@ jobs:
       - name: Build package
         working-directory: sdk
         run: |
-          #make package/${{ matrix.package }}/compile V=s -j$(nproc)
-          make package/compile V=s -j$(nproc)
-
+          make package/${{ matrix.package }}/compile V=s -j$(nproc)
+ 
       - name: Collect IPK
         working-directory: sdk
         run: |
