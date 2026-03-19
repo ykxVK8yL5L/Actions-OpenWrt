@@ -46,7 +46,8 @@ jobs:
       - name: Build package
         working-directory: sdk
         run: |
-          make package/${{ matrix.package }}/compile V=s -j$(nproc)
+          #make package/${{ matrix.package }}/compile V=s -j$(nproc)
+          make package/compile V=s -j$(nproc)
 
       - name: Collect IPK
         working-directory: sdk
