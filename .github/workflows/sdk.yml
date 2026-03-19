@@ -11,6 +11,10 @@ on:
         description: "Packages to build (space or newline separated)"
         required: true
         default: ""
+      extra_config:
+        description: "Extra .config options (multi-line supported)"
+        required: false
+        default: ""
 
 jobs:
   prepare:
@@ -62,6 +66,12 @@ jobs:
         working-directory: sdk
         run: |
           echo "CONFIG_PACKAGE_${{ matrix.package }}=m" >> .config
+          # 写入额外配置
+          if [ -n "${{ github.event.inputs.extra_config }}" ]; then
+            echo "Applying extra config:"
+            echo "${{ github.event.inputs.extra_config }}"
+            echo "${{ github.event.inputs.extra_config }}" >> .config
+          fi
           make defconfig
 
       - name: Build package
