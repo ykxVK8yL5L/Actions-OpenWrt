@@ -57,7 +57,7 @@ jobs:
       - name: Select package
         working-directory: sdk
         env:
-          CONFIG_FILE: x86_64/immortalwrt.sdk.config
+          CONFIG_FILE: x86_64/immortalwrt.config
         run: |
           cp -f $GITHUB_WORKSPACE/$CONFIG_FILE .config
           make defconfig
