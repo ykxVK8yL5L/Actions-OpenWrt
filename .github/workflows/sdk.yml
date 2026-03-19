@@ -7,33 +7,10 @@ on:
         description: "OpenWrt SDK URL (.tar.xz)"
         required: true
         default: ""
-      packages:
-        description: "Packages to build (space or newline separated)"
-        required: true
-        default: ""
 
 jobs:
-  prepare:
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-    steps:
-      - name: Parse package list
-        id: set-matrix
-        run: |
-          INPUT="${{ github.event.inputs.packages }}"
-          PKGS=$(echo "$INPUT" | tr '\n' ' ' | xargs -n1)
-          JSON=$(printf '%s\n' $PKGS | jq -R . | jq -cs .)
-          echo "Packages:"
-          echo "$JSON"
-          echo "matrix={\"package\":$JSON}" >> $GITHUB_OUTPUT
-
   build:
-    needs: prepare
     runs-on: ubuntu-latest
-    strategy:
-      matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
-
     steps:
       - name: Checkout
         uses: actions/checkout@main
@@ -60,8 +37,10 @@ jobs:
         
       - name: Select package
         working-directory: sdk
+        env:
+          CONFIG_FILE: x86_64/immortalwrt.sdk.config
         run: |
-          echo "CONFIG_PACKAGE_${{ matrix.package }}=m" >> .config
+          cp -f $GITHUB_WORKSPACE/$CONFIG_FILE .config
           make defconfig
 
       - name: Build package
