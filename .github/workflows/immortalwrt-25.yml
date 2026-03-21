@@ -81,6 +81,8 @@ jobs:
         VERSION="$(echo "${{github.event.action}}" | grep -Eo " [0-9.]+" | sed -e 's/ //')" || true
         [ "$VERSION" ] && echo "VERSION=$VERSION" >> $GITHUB_ENV || echo "VERSION=$(date +'%m.%d')" >> $GITHUB_ENV     
 
+   
+
     - name: Clone source code
       env: 
         TZ: Asia/Shanghai        
@@ -111,6 +113,12 @@ jobs:
         ccache: false
         mixkey: ${{ env.SOURCE_REPO }}-${{ env.REPO_BRANCH }}-${{ env.SOURCE_AUTHOR }}-x86
         prefix: ${{ env.OPENWRT_PATH }}
+
+    - name: Restore Cached
+      uses: actions/cache/restore@v5
+      with:
+        path: /mnt/openwrt/.ccache
+        key: ${{ env.SOURCE_REPO }}-${{ env.REPO_BRANCH }}-ccache-${{ matrix.target }}-x86
         
     - name: Update feeds
       working-directory: ./openwrt
