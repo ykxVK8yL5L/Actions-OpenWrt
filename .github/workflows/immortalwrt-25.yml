@@ -184,7 +184,8 @@ jobs:
       id: toolchain
       working-directory: ./openwrt
       run: |
-        make toolchain/install -j$(($(nproc)+1)) V=s  
+        make tools/install -j1 V=s
+        make toolchain/install -j$(nproc) V=s  
 
     - name: Compile the firmware
       if: env.IS_MINI == 'false'
