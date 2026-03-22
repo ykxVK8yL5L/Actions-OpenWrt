@@ -191,9 +191,8 @@ jobs:
         echo "status=success" >> "$GITHUB_OUTPUT"
 
     - name: Upload bin directory
-      if: env.IS_MINI == 'false'
       uses: actions/upload-artifact@main
-      if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
+      if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true' && env.IS_MINI == 'false'
       with:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: openwrt/bin
