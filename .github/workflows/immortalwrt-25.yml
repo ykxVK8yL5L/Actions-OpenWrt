@@ -129,6 +129,8 @@ jobs:
       run: |
         cp -f $GITHUB_WORKSPACE/$CONFIG_FILE .config
         make defconfig
+        make toolchain/compile -j$(nproc)
+        
 
     - name: Defconfig ${{matrix.target}}
       if: env.IS_MINI == 'false'
@@ -180,6 +182,7 @@ jobs:
         df -Th        
 
     - name: Compile the firmware
+      if: env.IS_MINI == 'false'
       id: compile
       working-directory: ./openwrt
       run: |
@@ -188,6 +191,7 @@ jobs:
         echo "status=success" >> "$GITHUB_OUTPUT"
 
     - name: Upload bin directory
+      if: env.IS_MINI == 'false'
       uses: actions/upload-artifact@main
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
@@ -196,7 +200,7 @@ jobs:
 
     - name: Organize files
       id: organize
-      if: steps.compile.outputs.status == 'success' && !cancelled()
+      if: steps.compile.outputs.status == 'success' && !cancelled() && env.IS_MINI == 'false'
       run: |
         tar -zcvf AllPackages.tar.gz openwrt/bin/packages
         mv AllPackages.tar.gz openwrt/bin/targets/*/*
@@ -208,14 +212,14 @@ jobs:
 
     - name: Upload firmware directory
       uses: actions/upload-artifact@main
-      if: steps.organize.outputs.status == 'success' && !cancelled()
+      if: steps.organize.outputs.status == 'success' && !cancelled() && env.IS_MINI == 'false'
       with:
         name: ${{ env.date3 }} _${{matrix.target}}
         path: ${{ env.FIRMWARE }}
         
     - name: Generate release tag
       id: tag
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled() 
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled() && env.IS_MINI == 'false'
       run: |
         echo -e "${{ env.date }}_${{matrix.target}}\n" >> release.txt
         touch release.txt
@@ -224,7 +228,7 @@ jobs:
 
     - name: Upload firmware to release
       uses: softprops/action-gh-release@master
-      if: steps.organize.outputs.status == 'success' && !cancelled() 
+      if: steps.organize.outputs.status == 'success' && !cancelled() && env.IS_MINI == 'false'
       env:
         GITHUB_TOKEN: ${{ secrets.RELEASES_TOKEN }}
       with:
