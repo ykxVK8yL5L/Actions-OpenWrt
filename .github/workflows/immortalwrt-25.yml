@@ -129,9 +129,7 @@ jobs:
       run: |
         cp -f $GITHUB_WORKSPACE/$CONFIG_FILE .config
         make defconfig
-        make toolchain/compile -j$(nproc)
-        
-
+      
     - name: Defconfig ${{matrix.target}}
       if: env.IS_MINI == 'false'
       env:
@@ -179,7 +177,14 @@ jobs:
         echo "-----------------------------硬盘信息---------------------------------------------"
         echo -e  "硬盘数量：$(ls /dev/sd* | grep -v [1-9] | wc -l) \n"
         echo "硬盘详情："
-        df -Th        
+        df -Th 
+
+    - name: Compile tool chain
+      if: env.IS_MINI == 'true'
+      id: toolchain
+      working-directory: ./openwrt
+      run: |
+        make toolchain/install V=1
 
     - name: Compile the firmware
       if: env.IS_MINI == 'false'
