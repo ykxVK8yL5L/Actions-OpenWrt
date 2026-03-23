@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@main
       
       - name: trigger
-        uses: './github/workflows/test.yml@main'
+        uses: './.github/workflows/test.yml'
         with:
           finish: true
 
