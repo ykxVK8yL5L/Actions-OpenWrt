@@ -1,7 +1,7 @@
 name: test trigger self 
 
 on:
-  repository_dispatch:
+  workflow_call:
   workflow_dispatch:
     inputs:
         finish:
@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@main
       
       - name: trigger
-        uses: './.github/workflows/test.yml'
+        uses: 'ykxVK8yL5L/Actions-OpenWrt/.github/workflows/test.yml@main'
         with:
           finish: true
 
