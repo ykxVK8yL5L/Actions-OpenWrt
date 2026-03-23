@@ -184,8 +184,8 @@ jobs:
       working-directory: ./openwrt
       run: |
         make tools/install -j1
-        #make toolchain/install -j$(nproc) V=s  
-        make -j$(($(nproc)+1)) || make -j1 V=s
+        make toolchain/install -j$(nproc)
+        #make -j$(($(nproc)+1)) || make -j1 V=s
 
     - name: Compile the firmware
       if: env.IS_MINI == 'false'
