@@ -34,5 +34,5 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh workflow run tests.yml -f finish=false
+          gh workflow run test.yml -f finish=false
 
