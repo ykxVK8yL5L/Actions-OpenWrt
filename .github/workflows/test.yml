@@ -1,7 +1,7 @@
 name: test trigger self 
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
         finish:
           type: boolean
@@ -31,7 +31,6 @@ jobs:
         uses: actions/checkout@main
       
       - name: trigger
-        uses: ./.github/workflows/test.yml
-        with:
-          finish: true
+        run: |
+          gh workflow run tests.yml -f finish=false
 
