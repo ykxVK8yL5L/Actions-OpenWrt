@@ -22,7 +22,7 @@ jobs:
   trigger:
     runs-on: ubuntu-latest
     needs: build 
-    if: env.FINISH == 'false'
+    if: ${{ env.FINISH }} == 'false'
 
     steps:
       - name: Checkout
@@ -31,6 +31,5 @@ jobs:
       - name: trigger
         uses: './github/workflows/test.yml'
         with:
-          branch: "openwrt-25.12"
           finish: true
 
