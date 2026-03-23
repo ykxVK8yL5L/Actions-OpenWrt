@@ -1,0 +1,36 @@
+name: test trigger self 
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+        finish:
+          type: boolean
+          description: "是否结束工作流"
+
+env:
+  FINISH: ${{ inputs.finish }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest   
+    steps:
+      - name: 'test'
+        run:|
+        echo "hello"
+  
+  trigger:
+  runs-on: ubuntu-latest
+  needs: build 
+  if: env.finish == 'false'
+
+  steps:
+    - name: Checkout
+      uses: actions/checkout@main
+    
+    - name: trigger
+      uses: './github/workflows/test.yml'
+      with:
+        branch: "openwrt-25.12"
+        finish: true
+
